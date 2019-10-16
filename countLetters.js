@@ -9,6 +9,15 @@ const assertEqual = function(actual, expected) {
 const countLetters = function(stringToCount) {
   let letterCount = {}
 
+  for (letter of stringToCount) {
+    if (letterCount[letter]) {
+      letterCount[letter] += 1;
+    } else {
+      letterCount[letter] = 1;
+    }
+
+  }
+
   return letterCount;
 };
 
@@ -17,6 +26,8 @@ const countLetters = function(stringToCount) {
 const trial1 = "lighthouse in the house";
 
 const trialCount = countLetters(trial1);
+
+console.log(trialCount);
 
 assertEqual(trialCount['l'], 1);
 assertEqual(trialCount['i'], 2);
