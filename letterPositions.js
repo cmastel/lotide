@@ -23,8 +23,17 @@ const eqArrays = function(array1, array2) {
 };
 
 const letterPositions = function(sentence) {
-  let results = {'h': [0]};
+  let results = {};
 
+  for (let i = 0; i < sentence.length; i++) {
+    let letter = sentence[i];
+    if (results[letter]) {
+      results[letter].push(i);
+    } else {
+      results[letter] = [i];
+    }
+  }
+  console.log("results:", results);
   return results;
 };
 
@@ -33,11 +42,9 @@ const letterPositions = function(sentence) {
 
 const testString = 'hello';
 const testPosition = letterPositions(testString);
-console.log(testPosition);
-console.log(testPosition['h'].length);
+console.log("testPosition:", testPosition);
 
-assertArraysEqual(testPosition['h'], [0]); /*
+assertArraysEqual(testPosition['h'], [0]); 
 assertArraysEqual(testPosition['e'], [1]);
 assertArraysEqual(testPosition['l'], [2, 3]);
 assertArraysEqual(testPosition['o'], [4]);
-*/
