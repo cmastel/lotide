@@ -16,26 +16,30 @@ const eqArrays = function(array1, array2) {
 };
 
 const eqObjects = function(object1, object2) {
-// returns true if both objects have identical keys with identical values
-// if not, returns false
-
-  // check if objects are the same length
-  if (Object.keys(object1).length === Object.keys(object2).length) {
-    for (let key1 in object1) { // iterate through each key in object1
-      
-      if (Array.isArray(object1[key1])) { // check if value of key1 is an array
-        if (!eqArrays(object1[key1], object2[key1])) { // if so, check if arrays are equal
-          return false; // return false if they are not
+  // returns true if both objects have identical keys with identical values
+  // if not, returns false
+  
+    // check if objects are the same length
+    if (Object.keys(object1).length === Object.keys(object2).length) {
+      for (let key1 in object1) { // iterate through each key in object1
+        
+        if (Array.isArray(object1[key1])) { // check if value of key1 is an array
+          if (!eqArrays(object1[key1], object2[key1])) { // if so, check if arrays are equal
+            return false; // return false if they are not
+          }
+        } else if (typeof object1[key1] === 'object') {
+          return eqObjects(object1[key1], object2[key1]);
         }
-      } else if (object1[key1] !== object2[key1]) {
-        return false; // return false if the key:value pairs do not match
+        
+        else if (object1[key1] !== object2[key1]) {
+          return false; // return false if the key:value pairs do not match
+        }
       }
+      return true; // return true if the for loop is able to complete
     }
-    return true; // return true if the for loop is able to complete
-  }
-
-  return false; // return false if the object key arrays are not the same length
-};
+  
+    return false; // return false if the object key arrays are not the same length
+  };
 
 const assertEqualObjects = function(actual, expected) {
   const inspect = require('util').inspect;
@@ -52,3 +56,11 @@ assertEqualObjects(ab, ba);
 
 const abc = { a: '1', b: '2', c: '3' };
 assertEqualObjects(ab, abc);
+
+// RECURSIVE TEST CODE
+
+assertEqualObjects({ a: { z: 1 }, b: 2 }, { a: { z: 1 }, b: 2 }); // => true
+assertEqualObjects({ a: { z: 1, pig: { can: 'fly', cant: 'talk' }, b: 2 }}, { a: { z: 1, pig: { can: 'fly', cant: 'talk' }, b: 2 }});
+
+assertEqualObjects({ a: { y: 0, z: 1 }, b: 2 }, { a: { z: 1 }, b: 2 }); // => false
+assertEqualObjects({ a: { y: 0, z: 1 }, b: 2 }, { a: 1, b: 2 }); // => false
