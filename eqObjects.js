@@ -34,7 +34,11 @@ const eqObjects = function(object1, object2) {
         if (!eqArrays(object1[key1], object2[key1])) { // if so, check if arrays are equal
           return false; // return false if they are not
         }
-      } else if (object1[key1] !== object2[key1]) {
+      } else if (typeof object1[key1] === 'object') {
+        return eqObjects(object1[key1], object2[key1]);
+      }
+      
+      else if (object1[key1] !== object2[key1]) {
         return false; // return false if the key:value pairs do not match
       }
     }
@@ -65,3 +69,10 @@ assertEqual(eqObjects(cd, cd2), false);
 
 const cd3 = {c: '1', d: '4' };
 assertEqual(eqObjects(cd, cd3), false);
+
+// RECURSIVE TEST CODE
+
+assertEqual(eqObjects({ a: { z: 1 }, b: 2 }, { a: { z: 1 }, b: 2 }), true); // => true
+
+assertEqual(eqObjects({ a: { y: 0, z: 1 }, b: 2 }, { a: { z: 1 }, b: 2 }), false); // => false
+assertEqual(eqObjects({ a: { y: 0, z: 1 }, b: 2 }, { a: 1, b: 2 }), false); // => false
