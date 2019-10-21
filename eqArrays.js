@@ -1,10 +1,4 @@
-const assertEqual = function(actual, expected) {
-  if (actual === expected) {
-    console.log(`✅✅✅ Assertion Passed: ${actual} === ${expected}`);
-  } else {
-    console.log(`🚨🚨🚨 Assertion Failed: ${actual} !== ${expected}`);
-  }
-};
+const assertEqual = require('./assertEqual');
 
 const eqArrays = function(array1, array2) {
   // first check if arrays are equal length
@@ -25,19 +19,6 @@ const eqArrays = function(array1, array2) {
   }
   return true; // return true if the for loop is able to finish (i.e. no unmatched pairs)
 }; 
+
+module.exports = eqArrays;
   
-
-// TEST CODE
-assertEqual(eqArrays([1, 2, 3], [1, 2, 3]), true);
-assertEqual(eqArrays([1, 2, 3], [1, 2, 3, 4]), false);
-assertEqual(eqArrays(['1', '2', '3'], ['1', '2', '3']), true);
-assertEqual(eqArrays(['1', '2', '3'], ['1', '2', 3]), false);
-assertEqual(eqArrays([1, 2, 3], [3, 2, 1]), false);
-assertEqual(eqArrays(['One', 'Ring', 'Rule'], ['One', 'Ring', 'Rule']), true);
-
-// RECURSIVE TEST CODE
-
-assertEqual(eqArrays([[2, 3], [4]], [[2, 3], [4]]), true); // => true
-
-assertEqual(eqArrays([[2, 3], [4]], [[2, 3], [4, 5]]), false);// => false
-assertEqual(eqArrays([[2, 3], [4]], [[2, 3], 4]), false);// => false
